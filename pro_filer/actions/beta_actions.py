@@ -11,34 +11,20 @@ def show_deepest_file(context):
         print(f"Deepest file: {deepest_file}")
 
 
-# def find_file_by_name(context, search_term, case_sensitive=True):
-#     if not search_term:
-#         return []
+def find_file_by_name(context, search_term, case_sensitive=True):
+    if not search_term:
+        return []
 
-#     found_files = []
+    found_files = []
 
-#     for path in context["all_files"]:
-#         file_name = path.split("/")[-1]
+    for path in context["all_files"]:
+        file_name = path.split("/")[-1]
 
-#         if not case_sensitive:
-#             file_name.lower()
-#             search_term.lower()
+        if not case_sensitive:
+            file_name = file_name.lower()
+            search_term = search_term.lower()
 
-#         if search_term in file_name:
-#             found_files.append(path)
+        if search_term in file_name:
+            found_files.append(path)
 
-#     return found_files
-
-
-# context_dict = {
-#     "all_files": [
-#         "/home/trybe/Downloads/trybe_looooooooooogo.png",
-#         "/home/trybe/Documents/aula/python/tests.txt",
-#     ]
-# }
-
-# context_no_dict = {"all_files": []}
-
-# if __name__ == "__main__":
-#     print(show_deepest_file(context_dict))
-#     print(show_deepest_file(context_no_dict))
+    return found_files
