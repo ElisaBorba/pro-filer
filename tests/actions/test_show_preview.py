@@ -1,13 +1,13 @@
-from pro_filer.actions.main_actions import show_preview  # NOQA
+from faker import Faker
 import pytest
+from pro_filer.actions.main_actions import show_preview  # NOQA
 
+fake = Faker()
 
 context_dict = {
     "all_files": ["src/__init__.py", "src/app.py", "src/utils/__init__.py"],
     "all_dirs": ["src", "src/utils"],
 }
-
-context_dict_expected = "Found 3 files and 2 directories\nFirst 5 files: ['src/__init__.py', 'src/app.py', 'src/utils/__init__.py']\nFirst 5 directories: ['src', 'src/utils']\n"
 
 context_more_than_5 = {
     "all_files": [
@@ -28,9 +28,23 @@ context_more_than_5 = {
     ],
 }
 
-context_more_than_5_expected = "Found 6 files and 6 directories\nFirst 5 files: ['src/__init__.py', 'src/app.py', 'src/utils/__init__.py', 'src/python.py', 'src/java.py']\nFirst 5 directories: ['src', 'src/utils', 'src/utils/a', 'src/utils/a/b', 'src/utils/a/b/c']\n"
-
 context_empty = {"all_files": [], "all_dirs": []}
+
+
+def generate_expected(files, dirs):
+    return (
+        f"Found {len(files)} files and {len(dirs)} directories\n"
+        f"First 5 files: {files[:5]}\n"
+        f"First 5 directories: {dirs[:5]}\n"
+    )
+
+
+context_dict_expected = generate_expected(
+    context_dict["all_files"], context_dict["all_dirs"]
+)
+context_more_than_5_expected = generate_expected(
+    context_more_than_5["all_files"], context_more_than_5["all_dirs"]
+)
 context_empty_expected = "Found 0 files and 0 directories\n"
 
 
