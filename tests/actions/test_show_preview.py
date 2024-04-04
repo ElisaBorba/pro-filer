@@ -1,31 +1,24 @@
-from faker import Faker
 import pytest
 from pro_filer.actions.main_actions import show_preview  # NOQA
+from faker import Faker
 
 fake = Faker()
+Faker.seed(0)
 
-context_dict = {
-    "all_files": ["src/__init__.py", "src/app.py", "src/utils/__init__.py"],
-    "all_dirs": ["src", "src/utils"],
-}
+
+def fake_paths(path_quantity, ext_quantity=""):
+    paths = []
+    for _ in range(path_quantity):
+        path = f"src{fake.file_path(depth=2, extension=ext_quantity)}"
+        paths.append(path)
+    return paths
+
+
+context_dict = {"all_files": fake_paths(3, "py"), "all_dirs": fake_paths(2)}
 
 context_more_than_5 = {
-    "all_files": [
-        "src/__init__.py",
-        "src/app.py",
-        "src/utils/__init__.py",
-        "src/python.py",
-        "src/java.py",
-        "src/javascript.py",
-    ],
-    "all_dirs": [
-        "src",
-        "src/utils",
-        "src/utils/a",
-        "src/utils/a/b",
-        "src/utils/a/b/c",
-        "src/utils/a/b/c/d",
-    ],
+    "all_files": fake_paths(6, "py"),
+    "all_dirs": fake_paths(6),
 }
 
 context_empty = {"all_files": [], "all_dirs": []}
@@ -42,6 +35,7 @@ def generate_expected(files, dirs):
 context_dict_expected = generate_expected(
     context_dict["all_files"], context_dict["all_dirs"]
 )
+
 context_more_than_5_expected = generate_expected(
     context_more_than_5["all_files"], context_more_than_5["all_dirs"]
 )
