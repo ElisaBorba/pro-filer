@@ -1,2 +1,0 @@
-
-    captured = capsys.readouterr()
