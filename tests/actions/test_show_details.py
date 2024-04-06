@@ -2,8 +2,6 @@ from pro_filer.actions.main_actions import show_details  # NOQA
 import os
 from datetime import date
 
-# from pathlib import Path
-
 
 def test_show_details_existing_path(capsys, tmp_path):
     test_path = tmp_path / "test_path.png"
@@ -57,8 +55,3 @@ def test_show_details_non_existing_path(capsys):
     show_details(context_no_file)
     captured = capsys.readouterr()
     assert captured.out == "File 'no_path.png' does not exist\n"
-
-
-# if __name__ == "__main__":
-#     context = {"base_path": "/home/trybe/Downloads/Trybe_logo.png"}
-#     print(show_details(context))
